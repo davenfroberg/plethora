@@ -1,5 +1,5 @@
 # Plethora
-*The Google Driver Killer*
+*The Google Drive Killer*
 
 ## To start Plethora ##
 1. Clone the repository
