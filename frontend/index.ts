@@ -3,7 +3,7 @@ function login() {
     let username = (document.querySelector('#username') as HTMLInputElement)?.value;
     let password = (document.querySelector('#password') as HTMLInputElement)?.value;
 
-    fetch('http://localhost:3000/login', {
+    fetch('/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ function register() {
     let password: string = (document.querySelector('#registerPassword') as HTMLInputElement)?.value;
     let name: string = (document.querySelector('#registerName') as HTMLInputElement)?.value;
 
-    fetch('http://localhost:3000/register', {
+    fetch('/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

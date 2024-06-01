@@ -22,7 +22,7 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello World!');
 });
 
-app.post('/register', async (req: Request, res: Response) => {
+app.post('/api/register', async (req: Request, res: Response) => {
     const username: string = req.body.username;
     const password: string = req.body.password;
     const name: string = req.body.name;
@@ -49,7 +49,7 @@ app.post('/register', async (req: Request, res: Response) => {
     }
 });
 
-app.post('/login', (req: Request, res: Response) => {
+app.post('/api/login', (req: Request, res: Response) => {
     const username: string = req.body.username;
     const password: string = req.body.password;
 
