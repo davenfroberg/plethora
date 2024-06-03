@@ -1,6 +1,7 @@
 import express, {Express, Request, Response} from 'express';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
+import {Pool} from 'pg';
 
 const app: Express = express();
 
@@ -8,18 +9,12 @@ app.use(express.json());
 app.use(cors({credentials: true, origin: true}));
 
 
-
-const { Pool } = require('pg');
-const pool = new Pool({
+const pool: Pool = new Pool({
     user: 'root',
     host: 'database',
     database: 'plethora',
     password: 'root',
     port: 5432,
-});
-
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!');
 });
 
 app.post('/api/register', async (req: Request, res: Response) => {
@@ -30,7 +25,7 @@ app.post('/api/register', async (req: Request, res: Response) => {
     let salt: string;
     let hashedPassword: string;
 
-    const saltRounds = 10; 
+    const saltRounds: number = 10;
     try {
         salt = await bcrypt.genSalt(saltRounds);
         hashedPassword = await bcrypt.hash(password, salt);
@@ -38,8 +33,8 @@ app.post('/api/register', async (req: Request, res: Response) => {
         throw new Error('Error hashing password');
     }
 
-    const sql = 'INSERT INTO users (username, name, password_hash, password_salt) VALUES ($1, $2, $3, $4)';
-    const params = [username, name, hashedPassword, salt];
+    const sql: string = 'INSERT INTO users (username, name, password_hash, password_salt) VALUES ($1, $2, $3, $4)';
+    const params: string[] = [username, name, hashedPassword, salt];
 
     try {
         await pool.query(sql, params);
@@ -53,8 +48,8 @@ app.post('/api/login', (req: Request, res: Response) => {
     const username: string = req.body.username;
     const password: string = req.body.password;
 
-    const sql = 'SELECT * FROM users WHERE username = $1';
-    const params = [username];
+    const sql: string = 'SELECT * FROM users WHERE username = $1';
+    const params: string[] = [username];
 
     pool.query(sql, params, (err: any, result: any) => {
         if (err) {
@@ -64,14 +59,48 @@ app.post('/api/login', (req: Request, res: Response) => {
             if (user) {
                 bcrypt.compare(password, user.password_hash, (err: any, result: any) => {
                     if (result) {
-                        res.send('Logged in user ' + username + '!');
+                        res.send("Logged in " + username + "!");
                     } else {
-                        res.status(400).send('Username or password is incorrect.');
+                        res.status(401).send('Username or password is incorrect.');
                     }
                 });
             } else {
-                res.status(400).send('Username or password is incorrect.');
+                res.status(401).send('Username or password is incorrect.');
             }
+        }
+    });
+});
+
+app.get('/api/profile/:username', (req: Request, res: Response) => {
+    const username: string = req.params.username;
+    const sql: string = 'SELECT username, name FROM users WHERE username = $1';
+    const params: string[] = [username];
+
+    pool.query(sql, params, (err: any, result: any) => {
+        if (err) {
+            res.status(400).send('Error getting profile');
+        } else {
+            const user = result.rows[0];
+            if (user) {
+                res.send(user);
+            } else {
+                res.status(404).send('User not found');
+            }
+        }
+    });
+});
+
+app.get('/api/files/:username', (req: Request, res: Response) => {
+    const username: string = req.params.username;
+    const sql: string = 'SELECT * FROM files WHERE username = $1';
+    const params: string[] = [username];
+
+    pool.query(sql, params, (err: any, result: any) => {
+        if (err) {
+            res.status(400).send('Error getting files');
+        } else {
+            const files = result.rows;
+            res.send(files);
         }
     });
 });
