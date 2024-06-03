@@ -1,4 +1,3 @@
-
 function login() {
     let username = (document.querySelector('#username') as HTMLInputElement)?.value;
     let password = (document.querySelector('#password') as HTMLInputElement)?.value;
@@ -14,7 +13,10 @@ function login() {
         }),
     })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            localStorage.setItem('token', data.token);
+            window.location.href = '/profile.html';
+        })
         .catch((error) => {
             console.error('Error:', error);
         });

@@ -2,12 +2,16 @@ import express, {Express, Request, Response} from 'express';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
 import {Pool} from 'pg';
+import jwt from 'jsonwebtoken';
+import authenticateToken, {AuthRequest} from "./middleware/jwtAuth";
 
 const app: Express = express();
 
 app.use(express.json());
 app.use(cors({credentials: true, origin: true}));
 
+// this won't stay here
+const secretKey: string = 'your-secret-key';
 
 const pool: Pool = new Pool({
     user: 'root',
@@ -59,7 +63,8 @@ app.post('/api/login', (req: Request, res: Response) => {
             if (user) {
                 bcrypt.compare(password, user.password_hash, (err: any, result: any) => {
                     if (result) {
-                        res.send("Logged in " + username + "!");
+                        const token: string = jwt.sign({username: user.username}, secretKey, {expiresIn: 30});
+                        res.json({token: token});
                     } else {
                         res.status(401).send('Username or password is incorrect.');
                     }
@@ -71,27 +76,27 @@ app.post('/api/login', (req: Request, res: Response) => {
     });
 });
 
-app.get('/api/profile/:username', (req: Request, res: Response) => {
-    const username: string = req.params.username;
+app.get('/api/profile/', authenticateToken, (req: AuthRequest, res: Response) => {
+    const username: string = req.user["username"];
     const sql: string = 'SELECT username, name FROM users WHERE username = $1';
     const params: string[] = [username];
 
     pool.query(sql, params, (err: any, result: any) => {
         if (err) {
-            res.status(400).send('Error getting profile');
+            res.status(400).send({response: 'Error getting profile'});
         } else {
             const user = result.rows[0];
             if (user) {
                 res.send(user);
             } else {
-                res.status(404).send('User not found');
+                res.status(404).send({response: 'User not found'});
             }
         }
     });
 });
 
-app.get('/api/files/:username', (req: Request, res: Response) => {
-    const username: string = req.params.username;
+app.get('/api/files/', authenticateToken, (req: AuthRequest, res: Response) => {
+    const username: string = req.user["username"];
     const sql: string = 'SELECT * FROM files WHERE username = $1';
     const params: string[] = [username];
 
