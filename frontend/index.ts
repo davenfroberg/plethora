@@ -1,3 +1,22 @@
+window.onload = function () {
+    checkRedirect()
+};
+
+function checkRedirect() {
+    const token = localStorage.getItem('token');
+    fetch('/api/profile/', {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            window.location.href = '/profile.html';
+        })
+        .catch((error) => {
+        });
+}
+
 function login() {
     let username = (document.querySelector('#username') as HTMLInputElement)?.value;
     let password = (document.querySelector('#password') as HTMLInputElement)?.value;

@@ -63,7 +63,7 @@ app.post('/api/login', (req: Request, res: Response) => {
             if (user) {
                 bcrypt.compare(password, user.password_hash, (err: any, result: any) => {
                     if (result) {
-                        const token: string = jwt.sign({username: user.username}, secretKey, {expiresIn: 30});
+                        const token: string = jwt.sign({username: user.username}, secretKey, {expiresIn: "4h"});
                         res.json({token: token});
                     } else {
                         res.status(401).send('Username or password is incorrect.');
@@ -106,6 +106,25 @@ app.get('/api/files/', authenticateToken, (req: AuthRequest, res: Response) => {
         } else {
             const files = result.rows;
             res.send(files);
+        }
+    });
+});
+
+app.post('/api/upload/', authenticateToken, (req: AuthRequest, res: Response) => {
+    const username: string = req.user["username"];
+    const filename: string = req.body["filename"];
+    const filepath: string = req.body["filepath"];
+    const size: string = req.body["size"];
+
+    const sql: string = 'INSERT INTO files (username, file_name, file_path, size) VALUES ($1, $2, $3, $4)';
+
+    const params: string[] = [username, filename, filepath, size];
+
+    pool.query(sql, params, (err: any, result: any) => {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            res.send('File uploaded');
         }
     });
 });

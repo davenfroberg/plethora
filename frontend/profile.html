@@ -3,14 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <link rel="stylesheet" href="profile.css">
     <script src="profile.js"></script>
 </head>
 <body>
 <h2>User Profile</h2>
 <div id="profileDiv">
     <h3 id="profileName"></h3>
-    <h3 id="profileUsername"></h3>
     <button type="button" onclick="logout()">Logout</button>
+</div>
+
+<div id="uploadDiv">
+    <h2>Upload File</h2>
+    <form>
+        <label for="filename">File Name:</label><br>
+        <input type="text" id="filename" name="filename"><br>
+        <label for="filepath">File Path:</label><br>
+        <input type="text" id="filepath" name="filepath"><br>
+        <label for="size">File Size:</label><br>
+        <input type="text" id="size" name="size"><br>
+        <button type="button" onclick="upload()">Upload!</button>
+    </form>
 </div>
 </body>
 </html>

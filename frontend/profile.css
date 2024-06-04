@@ -10,7 +10,7 @@ body {
     height: 100vh;
 }
 
-#registerDiv, #loginDiv {
+#profileDiv, #uploadDiv {
     background-color: white;
     padding: 20px;
     border-radius: 5px;
@@ -28,18 +28,18 @@ form {
     flex-direction: column;
 }
 
-label {
+form label {
     margin-bottom: 5px;
 }
 
-input {
+form input {
     margin-bottom: 20px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-button {
+form button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -48,6 +48,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+form button:hover {
     background-color: #0056b3;
 }
