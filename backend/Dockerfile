@@ -17,5 +17,4 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Define the command to run the application
-CMD [ "node", "app.js" ]
+CMD [ "node", "src/api/app.js" ]
