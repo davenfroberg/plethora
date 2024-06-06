@@ -1,6 +1,4 @@
-window.onload = function () {
-    checkRedirect()
-};
+checkRedirect()
 
 function checkRedirect() {
     const token = localStorage.getItem('token');
@@ -14,6 +12,10 @@ function checkRedirect() {
             window.location.href = '/profile.html';
         })
         .catch((error) => {
+            const body: HTMLElement | null = document.querySelector('body');
+            if (body) {
+                body.style.display = 'flex';
+            }
         });
 }
 

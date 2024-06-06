@@ -1,6 +1,4 @@
-window.onload = function () {
-    getProfile();
-};
+getProfile(); //check for redirect
 
 function getProfile() {
     const token = localStorage.getItem('token');
@@ -11,38 +9,43 @@ function getProfile() {
     })
         .then(response => {
             if (!response.ok) {
-                window.location.href = '/';
+                window.location.replace('/');
                 throw new Error("Not logged in.");
             }
             return response.json();
         })
         .then(data => {
+            const body: HTMLElement | null = document.querySelector('body');
+            if (body) {
+                body.style.display = 'flex';
+            }
             let profileName = document.querySelector('#profileName');
             if (profileName && data.name) {
                 profileName.innerHTML = 'Name: ' + data.name;
             }
         })
         .catch((error) => {
+            throw new Error("Not logged in.");
         });
 }
 
 function upload() {
     const token = localStorage.getItem('token');
-    const filename: string = (document.querySelector('#filename') as HTMLInputElement)?.value;
-    const filepath: string = (document.querySelector('#filepath') as HTMLInputElement)?.value;
-    const size: number = parseInt((document.querySelector('#size') as HTMLInputElement)?.value);
+    const fileInput: HTMLInputElement = (document.querySelector('#file') as HTMLInputElement)
+    let file: File | null = null;
+
+    if (fileInput && fileInput.files) {
+        file = fileInput.files[0];
+    }
+
 
     fetch('/api/upload/', {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
+            "Content-Type": "multipart/form-data"
         },
-        body: JSON.stringify({
-            filename: filename,
-            filepath: filepath,
-            size: size
-        }),
+        body: file
     })
         .then(response => {
             if (!response.ok) {
