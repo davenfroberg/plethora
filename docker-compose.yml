@@ -1,27 +1,18 @@
 services:
   backend:
     build:
-      context: ./backend
+      context: backend
       dockerfile: Dockerfile
     networks:
         - plethora
   frontend:
     build:
-      context: ./frontend
+      context: frontend
       dockerfile: Dockerfile
     networks:
         - plethora
-  nginx:
-    image: nginx:latest
     ports:
       - "80:80"
-    depends_on:
-      - frontend
-      - backend
-    volumes:
-      - ./frontend/nginx.conf:/etc/nginx/nginx.conf
-    networks:
-      - plethora
   database:
     image: postgres
     environment:

@@ -1,24 +1,26 @@
-# Use a Node.js image to install npm packages and compile TypeScript
-FROM node:20 AS build
+# Use the official Node.js runtime as the base image
+FROM node:18 as build
 
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install npm packages
+# Install dependencies
 RUN npm install
 
-RUN npm install -g typescript
-
-# Copy the rest of the source code
+# Copy the entire application code to the container
 COPY . .
 
-# Compile TypeScript into JavaScript
-RUN tsc
+# Build the React app for production
+RUN npm run build
 
-# Use the official Apache image from the Docker Hub
-FROM httpd:2.4
+# Use Nginx as the production server
+FROM nginx:alpine
 
-# Copy the compiled JavaScript and other website files to the default Apache directory
-COPY --from=build /app /usr/local/apache2/htdocs/
+# Copy the built React app to Nginx's web server directory
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Start Nginx when the container runs
+CMD ["nginx", "-g", "daemon off;"]x

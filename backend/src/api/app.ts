@@ -13,7 +13,7 @@ app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', fileRoutes);
 
-const port: number = 3000;
+const port: number = 4000;
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
