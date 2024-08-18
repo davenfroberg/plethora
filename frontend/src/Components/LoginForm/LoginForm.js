@@ -7,7 +7,6 @@ function LoginForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(`Logging in with username: ${username} and password: ${password}`);
         fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -21,7 +20,6 @@ function LoginForm() {
             .then(response => response.json())
             .then(data => console.log(data))
             .then(data => {
-                localStorage.setItem('token', data.token);
                 window.location.href = '/profile.html';
             })
             .catch((error) => {

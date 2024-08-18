@@ -7,7 +7,7 @@ import fileRoutes from './routes/fileRoutes';
 const app: Express = express();
 
 app.use(express.json());
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors());
 
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);

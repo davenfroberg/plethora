@@ -6,14 +6,14 @@ import pool from '../configs/dbConfig';
 const secretKey: string = 'your-secret-key';
 
 export const register = async (req: Request, res: Response) => {
-    const {username, password, name} = req.body;
+    const {username, password} = req.body;
 
     try {
         const salt: string = await bcrypt.genSalt(10);
         const hashedPassword: string = await bcrypt.hash(password, salt);
 
-        const sql: string = 'INSERT INTO users (username, name, password_hash, password_salt) VALUES ($1, $2, $3, $4)';
-        const params: string[] = [username, name, hashedPassword, salt];
+        const sql: string = 'INSERT INTO users (username, password_hash, password_salt) VALUES ($1, $2, $3)';
+        const params: string[] = [username, hashedPassword, salt];
 
         await pool.query(sql, params);
         res.send('Registered user ' + username + '!');

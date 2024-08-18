@@ -8,6 +8,24 @@ function RegisterForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(`Registering in with username: ${username} and password: ${password}`);
+        fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            }),
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .then(data => {
+                window.location.href = '/profile.html';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     };
 
     return (
