@@ -1,30 +1,39 @@
 import React, {useState} from 'react';
 import './LoginForm.css';
+import {useNavigate} from "react-router-dom";
 
-function LoginForm() {
+const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        fetch('/api/login', {
+    async function loginUser(credentials) {
+        return fetch('/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                username: username,
-                password: password
-            }),
+            body: JSON.stringify(credentials),
         })
             .then(response => response.json())
-            .then(data => console.log(data))
-            .then(data => {
-                window.location.href = '/profile.html';
-            })
             .catch((error) => {
                 console.error('Error:', error);
+                throw error;
             });
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const data = await loginUser({
+                username: username,
+                password: password,
+            });
+            localStorage.setItem('token', data.token);
+            navigate('/profile');
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
     };
 
     return (

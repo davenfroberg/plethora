@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './RegisterForm.css';
 
-function RegisterForm() {
+const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
