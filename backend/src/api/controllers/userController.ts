@@ -4,7 +4,7 @@ import {AuthRequest} from '../middlewares/jwtAuth';
 
 export const getProfile = (req: AuthRequest, res: Response) => {
     const username: string = req.user["username"];
-    const sql: string = 'SELECT username, name FROM users WHERE username = $1';
+    const sql: string = 'SELECT username FROM users WHERE username = $1';
     const params: string[] = [username];
 
     pool.query(sql, params, (err, result) => {
