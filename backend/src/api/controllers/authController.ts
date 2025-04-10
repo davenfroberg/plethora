@@ -6,6 +6,7 @@ import pool from '../configs/dbConfig';
 const secretKey: string = 'your-secret-key';
 
 export const register = async (req: Request, res: Response) => {
+    console.log('Registering user');
     const {username, password} = req.body;
 
     try {

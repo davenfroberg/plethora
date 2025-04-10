@@ -9,6 +9,7 @@ export interface AuthRequest extends Request {
 }
 
 const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction) => {
+    console.log("trying to validate!");
     const authHeader = req.headers.authorization;
     if (authHeader) {
         const token = authHeader.split(' ')[1];

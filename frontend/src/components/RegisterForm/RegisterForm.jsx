@@ -18,11 +18,13 @@ const RegisterForm = () => {
                 password: password
             }),
         })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .then(data => {
-                window.location.href = '/profile.html';
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
             })
+            .then(data => console.log(data))
             .catch((error) => {
                 console.error('Error:', error);
             });

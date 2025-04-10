@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./src/api/app.js",
   "scripts": {
-    "test": "test"
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/api/app.ts"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +21,9 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.12",
-    "@types/pg": "^8.11.6"
+    "@types/pg": "^8.11.6",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
