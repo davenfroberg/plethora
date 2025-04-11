@@ -26,14 +26,16 @@ function Files() {
   ]);
 
   const onDownload = (files) => {
-    // Handle file download
     console.log("Download files:", files);
   };
   
   return (
     <>
       <FileManager
-        files={files} onDownload={onDownload} enableFilePreview={false} filePreviewPath="https://example.com"
+        files={files} 
+        onDownload={onDownload} 
+        enableFilePreview={false} 
+        filePreviewPath="https://example.com"
         layout="list"
       />;
     </>
