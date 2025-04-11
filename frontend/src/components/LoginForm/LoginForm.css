@@ -42,3 +42,16 @@
 #header {
     margin: 0 auto;
 }
+
+.hidden {
+    display: none;
+}
+
+#incorrect {
+    color: red;
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+    font-weight:400;
+    font-style:italic;
+}

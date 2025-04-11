@@ -24,6 +24,7 @@ const LoginForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        document.getElementById('incorrect').classList.add('hidden');
         try {
             const data = await loginUser({
                 username: username,
@@ -32,13 +33,14 @@ const LoginForm = () => {
             localStorage.setItem('token', data.token);
             navigate('/profile');
         } catch (error) {
-            console.error('Login failed:', error);
+            document.getElementById('incorrect').classList.remove('hidden');
         }
     };
 
     return (
         <form onSubmit={handleSubmit} className="login-form">
             <h1 id="header">Login</h1>
+            <h2 id="incorrect" class="hidden">Incorrect username or password</h2>
             <label>
                 <span>Username:</span>
                 <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
@@ -49,7 +51,6 @@ const LoginForm = () => {
             </label>
             <input type="submit" value="Log in"/>
         </form>
-
     );
 }
 
