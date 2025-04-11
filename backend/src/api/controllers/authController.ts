@@ -1,12 +1,11 @@
 import {Request, Response} from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import pool from '../configs/dbConfig';
+import pool from '../configs/DbConfig';
 
 const secretKey: string = 'your-secret-key';
 
 export const register = async (req: Request, res: Response) => {
-    console.log('Registering user');
     const {username, password} = req.body;
 
     try {

@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
-import pool from '../configs/dbConfig';
-import {AuthRequest} from '../middlewares/jwtAuth';
+import pool from '../configs/DbConfig';
+import {AuthRequest} from '../middlewares/JwtAuth';
 
 export const getProfile = (req: AuthRequest, res: Response) => {
     const username: string = req.user["username"];

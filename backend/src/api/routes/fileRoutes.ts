@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getFiles, uploadFile } from '../controllers/fileController';
-import authenticateToken from '../middlewares/jwtAuth';
+import { getFiles, uploadFile } from '../controllers/FileController';
+import authenticateToken from '../middlewares/JwtAuth';
 
 const router: Router = Router();
 

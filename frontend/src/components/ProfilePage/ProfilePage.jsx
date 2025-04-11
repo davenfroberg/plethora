@@ -42,9 +42,8 @@ const ProfilePage = () => {
         return (<div/>);
     }
     return (
-        <div>
-            <p>Profile Page!</p>
-            <span>{username}</span>
+        <div id ="welcome">
+            <h1>Welcome {username}</h1>
         </div>
     );
 };
