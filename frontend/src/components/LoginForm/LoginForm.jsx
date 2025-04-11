@@ -24,7 +24,6 @@ const LoginForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        document.getElementById('incorrect').classList.add('hidden');
         try {
             const data = await loginUser({
                 username: username,

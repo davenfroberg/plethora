@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './ProfilePage.css';
 import {useNavigate} from "react-router-dom";
+import Files from "../Files/Files";
 
 const ProfilePage = () => {
     const [username, setUsername] = useState();
@@ -16,7 +17,7 @@ const ProfilePage = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
-            })
+            });
     }
 
     useEffect(() => {
@@ -42,9 +43,8 @@ const ProfilePage = () => {
         return (<div/>);
     }
     return (
-        <div id ="welcome">
-            <h1>Welcome {username}</h1>
-        </div>
+        <Files/>
+        
     );
 };
 
