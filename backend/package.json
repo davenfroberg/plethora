@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./src/api/app.js",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec ts-node src/api/app.ts"
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/api/App.ts"
   },
   "author": "",
   "license": "ISC",
