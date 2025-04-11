@@ -1,5 +1,30 @@
-#welcome {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+#logout-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right:15px;
+    transition: background-color 0.3s ease;
+
+}
+
+#logout-button:hover {
+    background-color: #0056b3;
+    transition: background-color 0.3s ease;
+}
+
+
+
+.title {
+    margin-left:15px;
+}
+
+.profile-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d8d8d8;
+    color: #072545;
 }

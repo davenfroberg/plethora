@@ -13,5 +13,6 @@ CREATE TABLE files
     file_name   VARCHAR(255) NOT NULL,
     file_path   VARCHAR(255) NOT NULL,
     upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    size        INTEGER      NOT NULL
+    size        INTEGER      NOT NULL,
+    is_directory BOOLEAN DEFAULT FALSE
 );

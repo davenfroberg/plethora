@@ -43,8 +43,16 @@ const ProfilePage = () => {
         return (<div/>);
     }
     return (
-        <Files/>
-        
+        <div className="profile-page">
+            <div className="profile-page-header">
+                <h1 className="title">Plethora</h1>
+                <button id="logout-button" onClick={() => {
+                    localStorage.removeItem('token');
+                    navigate('/');
+                }}>Logout</button>
+            </div>
+            <Files/>
+        </div>
     );
 };
 
