@@ -8,11 +8,12 @@ CREATE TABLE users
 
 CREATE TABLE files
 (
-    id          SERIAL PRIMARY KEY,
-    username    VARCHAR(50) REFERENCES users (username),
-    file_name   VARCHAR(255) NOT NULL,
-    file_path   VARCHAR(255) NOT NULL,
-    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    size        INTEGER      NOT NULL,
-    is_directory BOOLEAN DEFAULT FALSE
+    id              SERIAL PRIMARY KEY,
+    username        VARCHAR(50) REFERENCES users (username),
+    file_name       VARCHAR(255) NOT NULL,
+    file_path       VARCHAR(255) NOT NULL,
+    upload_date     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    size            INTEGER      NOT NULL,
+    filesystem_name VARCHAR(255) DEFAULT 'default_filesystem',   
+    is_directory    BOOLEAN DEFAULT FALSE
 );

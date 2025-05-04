@@ -16,6 +16,7 @@ export const register = async (req: Request, res: Response) => {
         const params: string[] = [username, hashedPassword, salt];
 
         await pool.query(sql, params);
+        console.log("Regsitering user " + username);
         res.send('Registered user ' + username + '!');
     } catch (error) {
         res.status(400).send('Error registering user');
@@ -38,6 +39,7 @@ export const login = (req: Request, res: Response) => {
             bcrypt.compare(password, user.password_hash, (err, result) => {
                 if (result) {
                     const token = jwt.sign({username: user.username}, secretKey, {expiresIn: "4h"});
+                    console.log("Logging in user " + username);
                     res.json({token});
                 } else {
                     res.status(401).send('Username or password is incorrect.');
